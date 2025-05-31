@@ -143,4 +143,13 @@ describe('AssetService', () => {
 
     await expect(assetService.getAllAssets()).rejects.toThrow(AppError);
   });
+
+  it('Should return an asset or assets by client ID successfully', async () => {
+    const mockAsset = { id: 1, name: 'Asset1', value: 1000, clientId: 1 };
+    (prisma.asset.findMany as jest.Mock).mockResolvedValue([mockAsset]);
+
+    const result = await assetService.getAssetsByClientId(1);
+    expect(result).toEqual([mockAsset]);
+    expect(prisma.asset.findMany).toHaveBeenCalledWith({ where: { clientId: 1 } });
+  });
 });
