@@ -39,6 +39,22 @@ export class AssetService {
     }
   }
 
+  async getAssetsByClientId(clientId: number): Promise<Asset[] | null> {
+    try {
+      const asset = await prisma.asset.findMany({
+        where: { clientId: clientId },
+      });
+
+      if (!asset) {
+        throw new NotFoundError(`Asset for Client ID ${clientId}, not found`);
+      }
+      return asset;
+    } catch (error: any) {
+      console.error('Error in getAssetsByClientId:', error);
+      throw new AppError('Failed to retrieve assets for client', 500);
+    }
+  }
+
   async getAllAssets(): Promise<Asset[]> {
     try {
       const assets = await prisma.asset.findMany();
