@@ -13,7 +13,7 @@ model Asset {
   name     String
   value    Float
   clientId Int
-  Client   Client @relation(fields: [clientId], references: [id])
+  Client   Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
 }
 
 model Client {
