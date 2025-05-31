@@ -14,13 +14,26 @@ const idParamJsonSchema = jsonSchema(IdParamSchema, { $refStrategy: 'none' });
 
 export async function clientRoutes(fastify: FastifyInstance, options: FastifyPluginOptions) {
   // GET /clients
-  fastify.get('/clients', clientController.getAllClients);
+  fastify.get(
+    '/clients',
+    {
+      schema: {
+        summary: 'Get all clients',
+        description: 'Retrieves all clients from the database',
+        tags: ['Clients'],
+      },
+    },
+    clientController.getAllClients
+  );
 
   // GET /clients/:id
   fastify.get(
     '/clients/:id',
     {
       schema: {
+        summary: 'Get client by ID',
+        description: 'Retrieves a client based on the provided ID',
+        tags: ['Clients'],
         params: idParamJsonSchema,
       },
     },
@@ -32,6 +45,9 @@ export async function clientRoutes(fastify: FastifyInstance, options: FastifyPlu
     '/clients',
     {
       schema: {
+        summary: 'Creates a new client',
+        description: 'Saves a new client to the database',
+        tags: ['Clients'],
         body: createClientBodySchema,
       },
     },
@@ -43,6 +59,9 @@ export async function clientRoutes(fastify: FastifyInstance, options: FastifyPlu
     '/clients/:id',
     {
       schema: {
+        summary: 'Update client with PATCH',
+        description: 'Updates an existing client using PATCH method',
+        tags: ['Clients'],
         params: idParamJsonSchema,
         body: updateClientPatchBodySchema,
       },
@@ -55,6 +74,9 @@ export async function clientRoutes(fastify: FastifyInstance, options: FastifyPlu
     '/clients/:id',
     {
       schema: {
+        summary: 'Update client with PUT',
+        description: 'Updates an existing client using PUT method',
+        tags: ['Clients'],
         params: idParamJsonSchema,
         body: updateClientPutBodySchema,
       },
@@ -67,6 +89,9 @@ export async function clientRoutes(fastify: FastifyInstance, options: FastifyPlu
     '/clients/:id',
     {
       schema: {
+        summary: 'Delete client by ID',
+        description: 'Deletes a client based on the provided ID',
+        tags: ['Clients'],
         params: idParamJsonSchema,
       },
     },
