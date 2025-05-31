@@ -22,7 +22,7 @@ describe('ClientService', () => {
       name: 'Carlos',
       email: 'carlos@teste.com',
       status: true,
-      assets: [],
+      assets: <any>[],
     };
     (prisma.client.create as jest.Mock).mockResolvedValue(mockClient);
 
@@ -90,7 +90,7 @@ describe('ClientService', () => {
       name: 'Carlos Henrique',
       email: 'carlos@teste.com',
       status: true,
-      assets: [],
+      assets: <any>[],
     };
 
     (prisma.client.update as jest.Mock).mockResolvedValue(updatedData);
@@ -117,7 +117,7 @@ describe('ClientService', () => {
       name: 'Carlos Henrique',
       email: 'carlos@teste2.com',
       status: true,
-      assets: [],
+      assets: <any>[],
     };
     (prisma.client.update as jest.Mock).mockResolvedValue(updatedData);
 
