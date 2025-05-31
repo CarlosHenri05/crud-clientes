@@ -1,6 +1,7 @@
-import { Asset } from '@prisma/client';
+// src/service/AssetService.ts
+import { Asset, Prisma } from '@prisma/client';
 import { prisma } from '../prisma';
-import { Prisma } from '@prisma/client';
+import { NotFoundError, AppError, ConflictError } from '../utils/errors'; // Importa os erros customizados
 
 export class AssetService {
   async saveAsset(assetData: Prisma.AssetCreateInput): Promise<Asset> {
@@ -9,9 +10,13 @@ export class AssetService {
         data: assetData,
       });
       return asset;
-    } catch (error) {
+    } catch (error: any) {
+      if (error.code === 'P2002') {
+        // Exemplo: erro de unique constraint
+        throw new ConflictError('Asset with this name/value already exists (or other unique constraint)');
+      }
       console.error('Error in saveAsset:', error);
-      throw error;
+      throw new AppError('Failed to save asset', 500); // Lança um erro genérico de aplicação
     }
   }
 
@@ -20,10 +25,17 @@ export class AssetService {
       const asset = await prisma.asset.findUnique({
         where: { id: assetId },
       });
+      if (!asset) {
+        throw new NotFoundError(`Asset with ID ${assetId} not found`);
+      }
       return asset;
-    } catch (error) {
+    } catch (error: any) {
+      // Se for um erro NotFoundError, relança. Caso contrário, lança AppError
+      if (error instanceof NotFoundError) {
+        throw error;
+      }
       console.error('Error in getAssetById:', error);
-      throw error;
+      throw new AppError('Failed to retrieve asset', 500);
     }
   }
 
@@ -31,9 +43,9 @@ export class AssetService {
     try {
       const assets = await prisma.asset.findMany();
       return assets;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error in getAllAssets:', error);
-      throw error;
+      throw new AppError('Failed to retrieve assets', 500);
     }
   }
 
@@ -44,9 +56,13 @@ export class AssetService {
         data: assetData,
       });
       return updatedAsset;
-    } catch (error) {
+    } catch (error: any) {
+      if (error.code === 'P2025') {
+        // Prisma ClientKnownRequestError for record not found
+        throw new NotFoundError(`Asset with ID ${assetId} not found for update`);
+      }
       console.error('Error in updateAssetWithPatch:', error);
-      throw error;
+      throw new AppError('Failed to update asset', 500);
     }
   }
 
@@ -57,19 +73,28 @@ export class AssetService {
         data: assetData,
       });
       return updatedAsset;
-    } catch (error) {
+    } catch (error: any) {
+      if (error.code === 'P2025') {
+        // Prisma ClientKnownRequestError for record not found
+        throw new NotFoundError(`Asset with ID ${assetId} not found for update`);
+      }
       console.error('Error in updateAssetWithPut:', error);
-      throw error;
+      throw new AppError('Failed to update asset', 500);
     }
   }
+
   async deleteAsset(assetId: number): Promise<void> {
     try {
       await prisma.asset.delete({
         where: { id: assetId },
       });
-    } catch (error) {
+    } catch (error: any) {
+      if (error.code === 'P2025') {
+        // Prisma ClientKnownRequestError for record not found
+        throw new NotFoundError(`Asset with ID ${assetId} not found for deletion`);
+      }
       console.error('Error in deleteAsset:', error);
-      throw error;
+      throw new AppError('Failed to delete asset', 500);
     }
   }
 }
