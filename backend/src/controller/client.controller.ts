@@ -1,7 +1,6 @@
-// src/controller/client.controller.ts
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { ClientService } from '../service/client.service';
-import { AppError, NotFoundError, ConflictError, BadRequestError } from '../utils/errors';
+import { NotFoundError, ConflictError } from '../utils/errors';
 import { CreateClientSchema, UpdateClientSchema, PutClientSchema, IdParamSchema } from '../schema/client.schema';
 import { z } from 'zod';
 
