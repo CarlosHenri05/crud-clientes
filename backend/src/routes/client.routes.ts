@@ -1,111 +1,23 @@
-// routes/clientRoutes.ts
+// src/routes/client.routes.ts
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import { ClientController } from '../controller/client.controller';
+// import { AssetController } from '../controller/asset.controller';
 
 const clientController = new ClientController();
+// const assetController = new AssetController();
 
 export async function clientRoutes(fastify: FastifyInstance, options: FastifyPluginOptions) {
-  // GET /clients
   fastify.get('/clients', clientController.getAllClients);
+  fastify.get('/clients/:id', clientController.getClientById);
+  fastify.post('/clients', clientController.saveClient);
+  fastify.patch('/clients/:id', clientController.updateClientWithPatch);
+  fastify.put('/clients/:id', clientController.updateClientWithPut);
+  fastify.delete('/clients/:id', clientController.deleteClient);
 
-  // GET /clients/:id
-  fastify.get(
-    '/clients/:id',
-    {
-      schema: {
-        params: {
-          type: 'object',
-          required: ['id'],
-          properties: {
-            id: { type: 'string', pattern: '^[0-9]+$' },
-          },
-        },
-      },
-    },
-    clientController.getClientById
-  );
-
-  // POST /clients
-  fastify.post(
-    '/clients',
-    {
-      schema: {
-        body: {
-          type: 'object',
-          required: ['name', 'email'], // ajuste conforme seus campos obrigatórios
-          properties: {
-            id: { type: 'number', pattern: '^[0-9]+$' },
-            name: { type: 'string' },
-            email: { type: 'string', format: 'email' },
-            status: { type: 'boolean' },
-            assets: {
-              type: 'array',
-              items: {
-                type: 'object',
-                properties: {
-                  id: { type: 'number', pattern: '^[0-9]+$' },
-                  name: { type: 'string' },
-                  value: { type: 'number' },
-                  clientId: { type: 'number', pattern: '^[0-9]+$' },
-                },
-              },
-            },
-            // adicione outros campos do Client aqui
-          },
-        },
-      },
-    },
-    clientController.saveClient
-  );
-
-  // PATCH /clients/:id
-  fastify.patch(
-    '/clients/:id',
-    {
-      schema: {
-        params: {
-          type: 'object',
-          required: ['id'],
-          properties: {
-            id: { type: 'string', pattern: '^[0-9]+$' },
-          },
-        },
-      },
-    },
-    clientController.updateClientWithPatch
-  );
-
-  // PUT /clients/:id
-  fastify.put(
-    '/clients/:id',
-    {
-      schema: {
-        params: {
-          type: 'object',
-          required: ['id'],
-          properties: {
-            id: { type: 'string', pattern: '^[0-9]+$' },
-          },
-        },
-      },
-    },
-    clientController.updateClientWithPut
-  );
-
-  // DELETE /clients/:id
-  fastify.delete(
-    '/clients/:id',
-    {
-      schema: {
-        params: {
-          type: 'object',
-          required: ['id'],
-          properties: {
-            id: { type: 'string', pattern: '^[0-9]+$' },
-          },
-        },
-      },
-    },
-    clientController.deleteClient
-  );
+  // fastify.post('/assets', assetController.saveAsset);
+  // fastify.get('/assets/:id', assetController.getAssetById);
+  // fastify.get('/assets', assetController.getAllAssets);
+  // fastify.patch('/assets/:id', assetController.updateAssetWithPatch);
+  // fastify.put('/assets/:id', assetController.updateAssetWithPut);
+  // fastify.delete('/assets/:id', assetController.deleteAsset);
 }
