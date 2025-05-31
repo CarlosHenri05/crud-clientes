@@ -3,6 +3,7 @@ import { clientRoutes } from './routes/client.routes';
 import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import cors from '@fastify/cors';
+import { AppError } from './utils/errors';
 
 const server = fastify({
   logger: true,
@@ -31,6 +32,17 @@ server.register(cors, {
 });
 
 server.register(clientRoutes);
+
+server.setErrorHandler((error, request, reply) => {
+  if (error instanceof AppError) {
+    reply.status(error.statusCode).send({ message: error.message });
+  } else if (error instanceof Error) {
+    server.log.error(error);
+    reply.status(500).send({ message: 'Internal Server Error' });
+  } else {
+    reply.status(500).send({ message: 'An unexpected error occurred' });
+  }
+});
 
 const start = async () => {
   try {
