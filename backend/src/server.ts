@@ -4,6 +4,7 @@ import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import cors from '@fastify/cors';
 import { AppError } from './utils/errors';
+import { assetRoutes } from './routes/asset.routes';
 
 const server = fastify({
   logger: true,
@@ -35,6 +36,7 @@ server.register(cors, {
 });
 
 server.register(clientRoutes);
+server.register(assetRoutes);
 
 server.setErrorHandler((error, request, reply) => {
   if (error instanceof AppError) {
