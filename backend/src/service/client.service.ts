@@ -1,4 +1,3 @@
-// src/service/ClientService.ts
 import { Client, Prisma } from '@prisma/client';
 import { prisma } from '../prisma';
 import { AppError, NotFoundError, ConflictError } from '../utils/errors'; // Importa os erros customizados
@@ -56,7 +55,6 @@ export class ClientService {
       return updatedClient;
     } catch (error: any) {
       if (error.code === 'P2025') {
-        // Prisma ClientKnownRequestError for record not found
         throw new NotFoundError(`Client with ID ${clientId} not found for update`);
       }
       if (error.code === 'P2002' && error.meta?.target?.includes('email')) {
@@ -76,7 +74,6 @@ export class ClientService {
       return updatedClient;
     } catch (error: any) {
       if (error.code === 'P2025') {
-        // Prisma ClientKnownRequestError for record not found
         throw new NotFoundError(`Client with ID ${clientId} not found for update`);
       }
       if (error.code === 'P2002' && error.meta?.target?.includes('email')) {
@@ -87,15 +84,14 @@ export class ClientService {
     }
   }
 
-  async deleteClient(clientId: number): Promise<void> {
+  async deleteClient(id: number): Promise<void> {
     try {
       await prisma.client.delete({
-        where: { id: clientId },
+        where: { id: id },
       });
     } catch (error: any) {
       if (error.code === 'P2025') {
-        // Prisma ClientKnownRequestError for record not found
-        throw new NotFoundError(`Client with ID ${clientId} not found for deletion`);
+        throw new NotFoundError(`Client with ID ${id} not found for deletion`);
       }
       console.error('Error in deleteClient:', error);
       throw new AppError('Failed to delete client', 500);
