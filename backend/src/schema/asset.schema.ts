@@ -17,3 +17,7 @@ export const UpdateAssetSchema = AssetSchema.partial().strict(); // Permite atua
 export const IdParamSchema = z.object({
   id: z.coerce.number().int().positive('ID must be a positive integer'), // z.coerce.number() para converter string para number
 });
+
+export const IdClientParamSchema = z.object({
+  clientId: z.coerce.number().int().positive('ID must be a positive integer'),
+});
