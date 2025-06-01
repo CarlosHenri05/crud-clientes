@@ -7,15 +7,15 @@ import { Client, Asset } from '../types/types';
 import ClientTable from '@/components/ClientTable';
 import AssetTable from '../components/AssetTable';
 import AssetForm from '@/components/AssetForm';
-import ClientForm from '../components/ClientForm'; // Importe o novo formulário
-import Modal from '../components/Modal'; // Importe o componente Modal
+import ClientForm from '../components/ClientForm';
+import Modal from '../components/Modal';
 
 const DashboardPage: React.FC = () => {
   const [clients, setClients] = useState<Client[]>([]);
   const [assets, setAssets] = useState<Asset[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isClientFormOpen, setIsClientFormOpen] = useState(false); // Estado para controlar o modal do formulário
+  const [isClientFormOpen, setIsClientFormOpen] = useState(false);
   const [isAssetFormOpen, setIsAssetFormOpen] = useState(false);
 
   useEffect(() => {
@@ -39,13 +39,13 @@ const DashboardPage: React.FC = () => {
   }, []);
 
   const handleClientFormSuccess = () => {
-    setIsClientFormOpen(false); // Fecha o modal
-    // Recarrega a lista de clientes após o sucesso
+    setIsClientFormOpen(false);
+
     clientService.getAllClients().then(setClients).catch(console.error);
   };
 
   const handleClientFormCancel = () => {
-    setIsClientFormOpen(false); // Fecha o modal
+    setIsClientFormOpen(false);
   };
 
   const handleAssetFormSuccess = () => {
@@ -56,7 +56,6 @@ const DashboardPage: React.FC = () => {
   const handleAssetFormCancel = () => {
     setIsAssetFormOpen(false);
   };
-  // FIM das novas funções
 
   const handleDeleteClient = async (id: number) => {
     if (window.confirm('Tem certeza que deseja excluir este cliente?')) {
@@ -94,7 +93,6 @@ const DashboardPage: React.FC = () => {
         <p>Carregando dados...</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Tabela de Clientes */}
           <div>
             <h2 className="text-xl font-semibold mb-4 text-gray-700">Clientes</h2>
             <button onClick={() => setIsClientFormOpen(true)} className="bg-green-500 text-white px-4 py-2 rounded mb-4 hover:bg-green-600">
@@ -103,7 +101,6 @@ const DashboardPage: React.FC = () => {
             <ClientTable clients={clients} onDelete={handleDeleteClient} />
           </div>
 
-          {/* Tabela de Ativos */}
           <div>
             <h2 className="text-xl font-semibold mb-4 text-gray-700">Ativos</h2>
             <button onClick={() => setIsAssetFormOpen(true)} className="bg-green-500 text-white px-4 py-2 rounded mb-4 hover:bg-green-600">
@@ -114,7 +111,6 @@ const DashboardPage: React.FC = () => {
         </div>
       )}
 
-      {/* Modal para Adicionar Cliente */}
       <Modal isOpen={isClientFormOpen} onClose={handleClientFormCancel} title="Adicionar Novo Cliente">
         <ClientForm onSuccess={handleClientFormSuccess} onCancel={handleClientFormCancel} />
       </Modal>
