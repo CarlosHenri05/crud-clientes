@@ -30,3 +30,4 @@ yarn-error.log*
 # Other files
 init.sql
 backend/src/generated
+backend/node_modules
