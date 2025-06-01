@@ -3,10 +3,9 @@ generator client {
   output   = "../src/generated/prisma"
 }
 
-// Podia colocar a URL no .env ou no próprio docker-compose, mas coloquei diretamente aqui pois os dados do banco já estão no docker-compose.yml
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:root123@localhost:3306/crud_clientes"
+  url      = env("DATABASE_URL")
 }
 
 model Asset {

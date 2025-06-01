@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "rootDir": "./src", // Se seu código TS está em 'src'
+    "outDir": "./dist", // A saída compilada vai para 'dist' DENTRO de '/app'
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true, // Importante para ignorar erros de tipo em libs
+    "moduleResolution": "node", // Resolução de módulos para Node.js
+    "baseUrl": "./", // Base para resolução de módulos
+    "paths": {
+      "@prisma/client": ["./node_modules/@prisma/client"] // Ajuda o TS a encontrar os tipos do Prisma
+    }
+  },
+  "include": ["src/**/*.ts", "prisma/**/*.ts"], // Inclui os arquivos para compilação
+  "exclude": ["node_modules", "dist"] // Exclui diretórios que não devem ser compilados
+}
