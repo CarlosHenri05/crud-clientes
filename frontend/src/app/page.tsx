@@ -1,13 +1,11 @@
-// src/app/page.tsx
 'use client';
-
 import React, { useState, useEffect } from 'react';
 import { clientService, assetService } from '../services/api';
 import { Client, Asset } from '../types/types';
 import ClientTable from '@/components/ClientTable';
 import AssetTable from '../components/AssetTable';
-import AssetForm from '@/components/AssetForm';
 import ClientForm from '../components/ClientForm';
+import AssetForm from '../components/AssetForm';
 import Modal from '../components/Modal';
 
 const DashboardPage: React.FC = () => {
@@ -16,7 +14,9 @@ const DashboardPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isClientFormOpen, setIsClientFormOpen] = useState(false);
+  const [clientToEdit, setClientToEdit] = useState<Client | undefined>(undefined);
   const [isAssetFormOpen, setIsAssetFormOpen] = useState(false);
+  const [assetToEdit, setAssetToEdit] = useState<Asset | undefined>(undefined);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,24 +40,38 @@ const DashboardPage: React.FC = () => {
 
   const handleClientFormSuccess = () => {
     setIsClientFormOpen(false);
-
+    setClientToEdit(undefined);
     clientService.getAllClients().then(setClients).catch(console.error);
   };
 
   const handleClientFormCancel = () => {
     setIsClientFormOpen(false);
+    setClientToEdit(undefined);
+  };
+
+  const handleEditClient = (client: Client) => {
+    setClientToEdit(client);
+    setIsClientFormOpen(true);
   };
 
   const handleAssetFormSuccess = () => {
     setIsAssetFormOpen(false);
+    setAssetToEdit(undefined);
     assetService.getAllAssets().then(setAssets).catch(console.error);
   };
 
   const handleAssetFormCancel = () => {
     setIsAssetFormOpen(false);
+    setAssetToEdit(undefined);
+  };
+
+  const handleEditAsset = (asset: Asset) => {
+    setAssetToEdit(asset);
+    setIsAssetFormOpen(true);
   };
 
   const handleDeleteClient = async (id: number) => {
+    console.log('Deletando Cliente - ID:', id, 'Tipo:', typeof id);
     if (window.confirm('Tem certeza que deseja excluir este cliente?')) {
       try {
         await clientService.deleteClient(id);
@@ -95,27 +109,40 @@ const DashboardPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
             <h2 className="text-xl font-semibold mb-4 text-gray-700">Clientes</h2>
-            <button onClick={() => setIsClientFormOpen(true)} className="bg-green-500 text-white px-4 py-2 rounded mb-4 hover:bg-green-600">
+            <button
+              onClick={() => {
+                setClientToEdit(undefined);
+                setIsClientFormOpen(true);
+              }}
+              className="bg-green-500 text-white px-4 py-2 rounded mb-4 hover:bg-green-600"
+            >
               Adicionar Novo Cliente
             </button>
-            <ClientTable clients={clients} onDelete={handleDeleteClient} />
+            <ClientTable clients={clients} onDelete={handleDeleteClient} onEdit={handleEditClient} /> {/* << Passa onEdit */}
           </div>
 
           <div>
             <h2 className="text-xl font-semibold mb-4 text-gray-700">Ativos</h2>
-            <button onClick={() => setIsAssetFormOpen(true)} className="bg-green-500 text-white px-4 py-2 rounded mb-4 hover:bg-green-600">
-              Adicionar ativo
+            <button
+              onClick={() => {
+                setAssetToEdit(undefined);
+                setIsAssetFormOpen(true);
+              }}
+              className="bg-green-500 text-white px-4 py-2 rounded mb-4 hover:bg-green-600"
+            >
+              Adicionar Ativo
             </button>
-            <AssetTable assets={assets} onDelete={handleDeleteAsset} />
+            <AssetTable assets={assets} onDelete={handleDeleteAsset} onEdit={handleEditAsset} />
           </div>
         </div>
       )}
 
-      <Modal isOpen={isClientFormOpen} onClose={handleClientFormCancel} title="Adicionar Novo Cliente">
-        <ClientForm onSuccess={handleClientFormSuccess} onCancel={handleClientFormCancel} />
+      <Modal isOpen={isClientFormOpen} onClose={handleClientFormCancel} title={clientToEdit ? 'Editar Cliente' : 'Adicionar Novo Cliente'}>
+        <ClientForm onSuccess={handleClientFormSuccess} onCancel={handleClientFormCancel} clientToEdit={clientToEdit} />
       </Modal>
-      <Modal isOpen={isAssetFormOpen} onClose={handleAssetFormCancel} title="Adicionar Novo Ativo">
-        <AssetForm onSuccess={handleAssetFormSuccess} onCancel={handleAssetFormCancel} clients={clients} />
+
+      <Modal isOpen={isAssetFormOpen} onClose={handleAssetFormCancel} title={assetToEdit ? 'Editar Ativo' : 'Adicionar Novo Ativo'}>
+        <AssetForm onSuccess={handleAssetFormSuccess} onCancel={handleAssetFormCancel} clients={clients} assetToEdit={assetToEdit} />
       </Modal>
     </div>
   );

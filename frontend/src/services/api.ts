@@ -16,7 +16,7 @@ export const clientService = {
     return response.data;
   },
   getClientById: async (id: number): Promise<Client> => {
-    const response = await apiClient.get(`/clients/:${id}`);
+    const response = await apiClient.get(`/clients/${id}`);
     return response.data;
   },
   postClient: async (clientData: Omit<Client, 'id' | 'assets'>): Promise<Client> => {
@@ -24,7 +24,7 @@ export const clientService = {
     return response.data;
   },
   updateClientWithPatch: async (idClient: number, clientData: Partial<Omit<Client, 'id' | 'assets'>>): Promise<Client> => {
-    const response = await apiClient.patch(`/clients/:${idClient}`, clientData);
+    const response = await apiClient.patch(`/clients/${idClient}`, clientData);
     return response.data;
   },
   updateClientWithPut: async (idClient: number, clientData: Omit<Client, 'id' | 'assets'>): Promise<Client> => {
@@ -32,7 +32,7 @@ export const clientService = {
     return response.data;
   },
   deleteClient: async (idClient: number): Promise<void> => {
-    await apiClient.delete(`/clients/:${idClient}`);
+    await apiClient.delete(`/clients/${idClient}`);
   },
 };
 
@@ -42,11 +42,11 @@ export const assetService = {
     return response.data;
   },
   getAssetById: async (idAsset: number): Promise<Asset> => {
-    const response = await apiClient.get(`/assets/:${idAsset}`);
+    const response = await apiClient.get(`/assets/${idAsset}`);
     return response.data;
   },
   getAssetByClientId: async (clientId: number): Promise<Asset[]> => {
-    const response = await apiClient.get(`/assets/client/:${clientId}`);
+    const response = await apiClient.get(`/assets/client/${clientId}`);
     return response.data;
   },
   postAsset: async (assetData: Omit<Asset, 'id' | 'client'>): Promise<Asset> => {
@@ -54,14 +54,14 @@ export const assetService = {
     return response.data;
   },
   updateAssetWithPatch: async (assetId: number, assetData: Partial<Omit<Asset, 'id' | 'client'>>): Promise<Asset> => {
-    const response = await apiClient.patch(`/assets/:${assetId}`, assetData);
+    const response = await apiClient.patch(`/assets/${assetId}`, assetData);
     return response.data;
   },
   updateAssetWithPut: async (assetId: number, assetData: Omit<Asset, 'id' | 'client'>): Promise<Asset> => {
-    const response = await apiClient.put(`/assets/:${assetId}`, assetData);
+    const response = await apiClient.put(`/assets/${assetId}`, assetData);
     return response.data;
   },
   deleteAsset: async (assetId: number): Promise<void> => {
-    await apiClient.delete(`/assets/:${assetId}`);
+    await apiClient.delete(`/assets/${assetId}`);
   },
 };

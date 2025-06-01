@@ -1,21 +1,34 @@
 // src/components/ClientForm.tsx
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { clientService } from '../services/api';
 import { Client } from '../types/types';
 
 interface ClientFormProps {
   onSuccess: () => void;
   onCancel: () => void;
+  clientToEdit?: Client;
 }
 
-const ClientForm: React.FC<ClientFormProps> = ({ onSuccess, onCancel }) => {
+const ClientForm: React.FC<ClientFormProps> = ({ onSuccess, onCancel, clientToEdit }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (clientToEdit) {
+      setName(clientToEdit.name);
+      setEmail(clientToEdit.email);
+      setStatus(clientToEdit.status);
+    } else {
+      setName('');
+      setEmail('');
+      setStatus(true);
+    }
+  }, [clientToEdit]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,18 +36,27 @@ const ClientForm: React.FC<ClientFormProps> = ({ onSuccess, onCancel }) => {
     setError(null);
 
     try {
-      const newClientData: Omit<Client, 'id' | 'assets'> = {
-        name,
-        email,
-        status,
-      };
-
-      await clientService.postClient(newClientData);
-      alert('Cliente criado com sucesso!');
+      if (clientToEdit) {
+        const updatedClientData: Partial<Omit<Client, 'id' | 'assets'>> = {
+          name,
+          email,
+          status,
+        };
+        await clientService.updateClientWithPatch(clientToEdit.id, updatedClientData);
+        alert('Cliente atualizado com sucesso!');
+      } else {
+        const newClientData: Omit<Client, 'id' | 'assets'> = {
+          name,
+          email,
+          status,
+        };
+        await clientService.postClient(newClientData);
+        alert('Cliente criado com sucesso!');
+      }
       onSuccess();
     } catch (err: any) {
-      console.error('Erro ao criar cliente:', err.response?.data || err.message);
-      setError(`Erro ao criar cliente: ${err.response?.data?.message || 'Verifique os dados.'}`);
+      console.error(`Erro ao ${clientToEdit ? 'atualizar' : 'criar'} cliente:`, err.response?.data || err.message);
+      setError(`Erro ao ${clientToEdit ? 'atualizar' : 'criar'} cliente: ${err.response?.data?.message || 'Verifique os dados.'}`);
     } finally {
       setLoading(false);
     }
@@ -42,7 +64,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onSuccess, onCancel }) => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold mb-4">Adicionar Novo Cliente</h2>
+      <h2 className="text-xl font-semibold mb-4">{clientToEdit ? 'Editar Cliente' : 'Adicionar Novo Cliente'}</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">
@@ -79,7 +101,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ onSuccess, onCancel }) => {
         {error && <p className="text-red-500 text-xs italic mb-4">{error}</p>}
         <div className="flex items-center justify-between">
           <button type="submit" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" disabled={loading}>
-            {loading ? 'Adicionando...' : 'Adicionar Cliente'}
+            {loading ? (clientToEdit ? 'Atualizando...' : 'Adicionando...') : clientToEdit ? 'Salvar Alterações' : 'Adicionar Cliente'}
           </button>
           <button type="button" onClick={onCancel} className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" disabled={loading}>
             Cancelar
