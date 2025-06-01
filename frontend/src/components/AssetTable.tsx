@@ -7,7 +7,7 @@ interface AssetTableProps {
   onEdit: (asset: Asset) => void;
 }
 
-const AssetTable: React.FC<AssetTableProps> = ({ assets, onDelete }) => {
+const AssetTable: React.FC<AssetTableProps> = ({ assets, onDelete, onEdit }) => {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white">
@@ -36,7 +36,9 @@ const AssetTable: React.FC<AssetTableProps> = ({ assets, onDelete }) => {
                 <td className="py-2 px-4">R$ {asset.value.toFixed(2)}</td>
                 <td className="py-2 px-4">{asset.clientId}</td>
                 <td className="py-2 px-4">
-                  <button className="bg-blue-500 text-white px-3 py-1 rounded mr-2 hover:bg-blue-600">Editar</button>
+                  <button onClick={() => onEdit(asset)} className="bg-blue-500 text-white px-3 py-1 rounded mr-2 hover:bg-blue-600">
+                    Editar
+                  </button>
                   <button onClick={() => onDelete(asset.id)} className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
                     Excluir
                   </button>
