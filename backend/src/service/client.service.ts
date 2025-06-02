@@ -1,4 +1,4 @@
-import { Client, Prisma } from '@prisma/client';
+import { Client, Prisma } from 'src/generated/prisma';
 import { prisma } from '../prisma';
 import { AppError, NotFoundError, ConflictError } from '../utils/errors'; // Importa os erros customizados
 

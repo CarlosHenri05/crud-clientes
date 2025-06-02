@@ -2,8 +2,8 @@ import { AssetService } from '../service/asset.service';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { AppError, NotFoundError, ConflictError, BadRequestError } from '../utils/errors';
 import { CreateAssetSchema, UpdateAssetSchema, IdParamSchema, AssetSchema, IdClientParamSchema } from '../schema/asset.schema';
-import { any, z } from 'zod';
-import { Prisma } from '@prisma/client';
+import { z } from 'zod';
+import { Prisma } from 'src/generated/prisma';
 
 const assetService = new AssetService();
 
@@ -14,7 +14,7 @@ export class AssetController {
       const assetCreateInput = {
         name: assetData.name,
         value: assetData.value,
-        client: { connect: { id: assetData.clientId } },
+        Client: { connect: { id: assetData.clientId } },
       };
       const asset = await assetService.saveAsset(assetCreateInput);
 
