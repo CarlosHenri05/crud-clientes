@@ -61,7 +61,7 @@ crud-clientes/
 
 ## ⚙️ Como Executar o Projeto
 
-### Pre-requisitos
+### Pré-requisitos
 
 * [Docker](https://www.docker.com/get-started) instalado
 * [Docker Compose](https://docs.docker.com/compose/install/) instalado
