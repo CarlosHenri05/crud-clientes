@@ -5,6 +5,10 @@ services:
     restart: always
     env_file:
       - ./backend/.env
+    environment:
+      - MYSQL_USER=app_user_local
+      - MYSQL_PASSWORD=app_password_local
+      - MYSQL_DATABASE=crud_clientes_local
     ports:
       - '3306:3306'
     volumes:
