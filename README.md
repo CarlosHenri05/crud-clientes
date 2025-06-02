@@ -94,10 +94,6 @@ docker-compose up --build
 
 O backend dessa aplicação possui testes unitários feitos em Jest (Typescript), seguindo as práticas do TDD. 
 
-## 📄 Licenca
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
-
 ---
 
 Se este projeto foi útil para você, deixe uma ⭐ no repositório!
