@@ -17,7 +17,7 @@ yarn-error.log*
 .env.local
 
 # Prisma
-/src/generated/prisma # A pasta do seu cliente Prisma gerado
+/src/generated/prisma 
 
 # Testing
 /coverage
