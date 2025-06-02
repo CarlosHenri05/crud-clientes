@@ -27,5 +27,12 @@ services:
     depends_on:
       - mysql
 
+  frontend:
+    build: ./frontend
+    container_name: crud-clientes-frontend
+    restart: always
+    ports:
+      - '3001:3001'
+
 volumes:
   mysql_data:
