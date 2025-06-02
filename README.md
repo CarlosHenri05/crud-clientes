@@ -4,26 +4,26 @@ Essa é uma aplicação full-stack feita como teste técnico da empresa Anka!
 
 # CRUD de Clientes
 
-Aplicacao fullstack para gerenciamento de clientes, permitindo operacoes de **Criar, Ler, Atualizar e Deletar** (CRUD). Desenvolvida com foco em boas praticas de desenvolvimento, arquitetura modular, boas práticas do TDD e uso de containers com Docker.
+Aplicacao fullstack para gerenciamento de clientes, permitindo operações de **Criar, Ler, Atualizar e Deletar** (CRUD). Desenvolvida com foco em boas práticas de desenvolvimento, arquitetura modular, boas práticas do TDD e uso de containers com Docker.
 
 ## 👷️ Tecnologias Utilizadas
 
 * **Frontend**: React + Next.js
 * **Backend**: Node.js com Fastify + Prisma (ORM)
 * **Banco de Dados**: MySQL
-* **Containerizacao**: Docker e Docker Compose
+* **Containerizção**: Docker e Docker Compose
 * **Linguagens**: TypeScript
 * **Ferramenta de teste**: Jest(TypeScript)
-* **Ferramentas**: Zod, Tailwindcss
+* **Outros**: Zod, Tailwindcss
 
 ## 🚀 Funcionalidades
 
 * Cadastro de novos clientes e ativos
 * Listagem de clientes e ativos com paginação
 * Edição de informações dos clientes e ativos
-* Remoçãod e clientes e dos ativos do sistema
-* Validacao de dados no frontend e backend
-* Comunicacao entre frontend e backend via API REST
+* Remoção de clientes e dos ativos do sistema
+* Validação de dados no frontend e backend
+* Comunicação entre frontend e backend via API REST
 
 ## 📆 Estrutura do Projeto
 
@@ -69,7 +69,7 @@ crud-clientes/
 
 ### Passos para rodar
 
-1. Clone o repositorio:
+1. Clone o repositório:
 
 ```bash
 git clone https://github.com/CarlosHenri05/crud-clientes.git
@@ -82,7 +82,7 @@ cd crud-clientes
 docker-compose up --build
 ```
 
-3. Acesse a aplicacao:
+3. Acesse a aplicação:
 
 * Frontend: [http://localhost:4200](http://localhost:3001)
 * API Backend: [http://localhost:3000](http://localhost:3000)
@@ -100,4 +100,4 @@ Este projeto está licenciado sob a [MIT License](LICENSE).
 
 ---
 
-Se este projeto foi util para voce, deixe uma ⭐ no repositorio!
+Se este projeto foi útil para você, deixe uma ⭐ no repositório!
