@@ -94,6 +94,14 @@ docker-compose up --build
 
 O backend dessa aplicação possui testes unitários feitos em Jest (Typescript), seguindo as práticas do TDD. 
 
+## 📷 Fotos da aplicação
+
+![printquatro](https://github.com/user-attachments/assets/5b57aeee-23d3-453f-bb64-11689dc7454d)
+![printum](https://github.com/user-attachments/assets/b81dc82e-8be3-4f09-8100-c149ebd452cf)
+![printdois](https://github.com/user-attachments/assets/cf5005af-721c-43cf-9673-527dac6a5676)
+![printtres](https://github.com/user-attachments/assets/843cd328-d728-4e88-9041-31208ae4032b)
+
+
 ---
 
 Se este projeto foi útil para você, deixe uma ⭐ no repositório!
