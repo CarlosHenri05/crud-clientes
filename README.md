@@ -100,6 +100,8 @@ O backend dessa aplicação possui testes unitários feitos em Jest (Typescript)
 ![printum](https://github.com/user-attachments/assets/b81dc82e-8be3-4f09-8100-c149ebd452cf)
 ![printdois](https://github.com/user-attachments/assets/cf5005af-721c-43cf-9673-527dac6a5676)
 ![printtres](https://github.com/user-attachments/assets/843cd328-d728-4e88-9041-31208ae4032b)
+![image](https://github.com/user-attachments/assets/2b349702-2c85-47e7-a7fd-9986a2db647d)
+
 
 
 ---
