@@ -86,7 +86,7 @@ docker-compose up --build
 
 * Frontend: [http://localhost:4200](http://localhost:3001)
 * API Backend: [http://localhost:3000](http://localhost:3000)
-* Documentação do backend: [http://localhost:3000](http://localhost:3000/docs)
+* Documentação do backend: [http://localhost:3000/docs](http://localhost:3000/docs)
 
 > O banco de dados estará acessível internamente via `mysql:3306` com credenciais configuradas no `docker-compose.yml`.
 
