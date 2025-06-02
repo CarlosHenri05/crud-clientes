@@ -4,7 +4,7 @@ Essa é uma aplicação full-stack feita como teste técnico da empresa Anka!
 
 # CRUD de Clientes
 
-Aplicacao fullstack para gerenciamento de clientes, permitindo operações de **Criar, Ler, Atualizar e Deletar** (CRUD). Desenvolvida com foco em boas práticas de desenvolvimento, arquitetura modular, boas práticas do TDD e uso de containers com Docker.
+Aplicação fullstack para gerenciamento de clientes, permitindo operações de **Criar, Ler, Atualizar e Deletar** (CRUD). Desenvolvida com foco em boas práticas de desenvolvimento, arquitetura modular, boas práticas do TDD e uso de containers com Docker.
 
 ## 👷️ Tecnologias Utilizadas
 
