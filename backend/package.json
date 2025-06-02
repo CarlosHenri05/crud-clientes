@@ -7,7 +7,8 @@
     "test": "jest",
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "start:dev": "npx prisma generate && npx prisma migrate deploy && npm run dev"
   },
   "keywords": [],
   "author": "",
