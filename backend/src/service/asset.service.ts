@@ -1,4 +1,3 @@
-// src/service/AssetService.ts
 import { Asset, Prisma } from 'src/generated/prisma';
 import { prisma } from '../prisma';
 import { NotFoundError, AppError, ConflictError } from '../utils/errors'; // Importa os erros customizados
